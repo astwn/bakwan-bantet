@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deteksi Suhu & Api WebApp</title>
+
+    <!--<script defer src="https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js"></script>-->
+
+    <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-database-compat.js"></script>
+
+    <script>
+     // REPLACE WITH YOUR web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCCnox7cEMtlR3PpOoTCxjkMIxaysToCOY",
+        authDomain: "esp32tes.firebaseapp.com",
+        databaseURL: "https://esp32tes-default-rtdb.firebaseio.com",
+        projectId: "esp32tes",
+        storageBucket: "esp32tes.appspot.com",
+        messagingSenderId: "945139673372",
+        appId: "1:945139673372:web:2e1174b54fa418d48f32d9"
+      };
+
+      // Initialize firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Make auth and database references
+      const auth = firebase.auth();
+      const db = firebase.database();
+
+    </script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <!--TOP BAR-->
+  <div class="topnav">
+    <h1>Deteksi Suhu & Api WebApp <i class="fas fa-clipboard-list"></i></h1>
+  </div>
+
+  <!--AUTHENTICATION BAR (USER DETAILS/LOGOUT BUTTON)-->
+  <div id="authentication-bar" style="display: none;">
+    <p><span id="authentication-status">User logged in</span>
+       <span id="user-details">USEREMAIL</span>
+       <a href="/" id="logout-link">(logout)</a>
+    </p>
+  </div>
+
+  <!--LOGIN FORM-->
+  <form id="login-form" style="display: none;">
+    <div class="form-elements-container">
+      <label for="input-email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Username" id="input-email" required>
+
+      <label for="input-password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" id="input-password" required>
+
+      <button type="submit" id="login-button">Login</button>
+      <p id="error-message" style="color:red;"></p>
+    </div>
+  </form>
+
+  <!--CONTENT (SENSOR READINGS)-->
+  <div class="content-sign-in" id="content-sign-in" style="display: none;">
+    <div class="cards">
+      <!--TEMPERATURE C-->
+      <div class="card">
+        <p><i class="fas fa-thermometer-half" style="color:#ee6a5e;"></i> TEMPERATURE C</p>
+        <p><span class="reading"><span id="tempC"></span> &deg;C</span></p>
+      </div>
+      <!--TEMPERATURE F-->
+      <div class="card">
+        <p><i class="fas fa-thermometer-half" style="color:#ee6a5e;"></i> TEMPERATURE F</p>
+        <p><span class="reading"><span id="tempF"></span> &deg;F</span></p>
+      </div>
+      <!--HUMIDITY-->
+      <div class="card">
+        <p><i class="fas fa-tint" style="color:#ee6a5e;"></i> HUMIDITY</p>
+        <p><span class="reading"><span id="hum"></span> &percnt;</span></p>
+      </div>
+      <!--Flame-->
+      <div class="card">
+        <p><i class="fas fa-tint" style="color:#ee6a5e;"></i> FLAME SENSOR</p>
+        <p><span class="reading"><span id="apiState"></span> </span></p>
+      </div>
+      <!--Status Pintu-->
+      <div class="card">
+        <p><i class="fas fa-tint" style="color:#ee6a5e;"></i> STATUS PINTU</p>
+        <p><span class="reading"><span id="pintu"></span> </span></p>
+      </div>
+      <!--BukaPintu-->
+      <div class="card">
+        <p><a href=""><i class="fas fa-tint" style="color:#ee6a5e;"></i> - </a></p>
+      </div>
+    </div>
+
+    <div class="logs-section">
+      <div class="topnav">
+        <h1>LOG <i class="fas fa-clipboard-list"></i></h1>
+    </div>
+
+    <div class="logs">
+        <div class="logs--header">
+            <h3>No</h3>
+            <h3>Celcius</h3>
+            <h3>Fahrenheit</h3>
+            <h3>Humidity</h3>
+            <h3>Status Api</h3>
+            <h3>Status Pintu</h3>
+        </div>
+    </div>
+    </div>
+  </div>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/index.js"></script>
+  </body>
+</html>
