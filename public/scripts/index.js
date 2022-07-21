@@ -32,7 +32,6 @@ const setupUI = (user) => {
     var dbPintuPath = 'UsersData/' + uid.toString() + '/pintu';
     //log
     var logPath = 'UsersData/' + uid.toString() + '/storage';
-    //var logApiPintuPath = 'UsersData/' + uid.toString() + '/storage/ApiPintu';
 
     // Database references
     var dbRefTempC = firebase.database().ref().child(dbPathTempC);
@@ -77,7 +76,7 @@ const setupUI = (user) => {
     let no = 1;
     const dbLogs = firebase.database().ref(logPath).once('value',(logs)=>{
       logs.forEach(log=>{
-        logsPlaceholder.insertAdjacentHTML("beforeend", htmlFormat(no, log.val().tempC ? `${log.val().tempC} &deg;C` : "No record", log.val().tempF ? `${log.val().tempF} &deg;F` : "No record", log.val().humidity ? `${log.val().humidity} &percnt;` : "No record", log.val().apiState !==undefined ? `${log.val().apiState}` : "No record", log.val().pintu !==undefined ? `${log.val().pintu}` : "No record",))
+        logsPlaceholder.insertAdjacentHTML("beforeend", htmlFormat(no, log.val().tempC ? `${log.val().tempC} &deg;C` : "No record", log.val().tempF ? `${log.val().tempF} &deg;F` : "No record", log.val().humidity ? `${log.val().humidity} &percnt;` : "No record", log.val().apiState === 1 ? "Api Tidak Terdeteksi" : "Api Terdeteksi", log.val().pintu === 1 ? "Pintu Tertutup" : "Pintu Terbuka",))
         no++;
       })
     }) 
@@ -90,3 +89,6 @@ const setupUI = (user) => {
     contentElement.style.display = 'none';
   }
 }
+
+
+//Code by @Tuyiiiing

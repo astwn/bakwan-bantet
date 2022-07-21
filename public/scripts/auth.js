@@ -39,3 +39,6 @@ auth.onAuthStateChanged(user => {
     e.preventDefault();
     auth.signOut();
    });
+
+
+//Code by @Tuyiiiing
