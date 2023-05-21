@@ -1,3 +1,88 @@
+#!/bin/bash
+
+TELEGRAM_BOT_TOKEN="5887410138:AAGPtHTxEZZX0rXoptjx69g1UpoOSz5Ss2w"
+TELEGRAM_CHAT_ID="-641335895"
+
+LEVEL_THRESHOLD=3000
+ALERT_INTERVAL=15
+
+levelAlert() {
+    if [ "$1" -le 3000 ]; then
+        echo 1
+    elif [ "$1" -le 4000 ]; then
+        echo 2
+    elif [ "$1" -le 5000 ]; then
+        echo 3
+    elif [ "$1" -le 7000 ]; then
+        echo 4
+    else
+        echo 5
+    fi
+}
+
+levelMessage() {
+    case "$1" in
+        1)
+            echo "🟢🟢🟢"
+            ;;
+        2)
+            echo "🟡🟡🟡"
+            ;;
+        3|4)
+            echo "🟠🟠🟠"
+            ;;
+        *)
+            echo "🔴🔴🔴"
+            ;;
+    esac
+}
+
+IP="$1"
+DIRECTION="$2"
+PPS="$3"
+
+if [ "$4" = "unban" ]; then
+    
+    exit 0
+fi
+
+if [ "$4" = "ban" ]; then
+    MESSAGE=""
+    ALERT_LEVEL=0
+    ALERT_TIME=$(date +%s)
+    PPS_ARRAY=()
+    while true; do
+        PPS_ARRAY+=("$PPS")
+        if [ "${#PPS_ARRAY[@]}" -gt "$ALERT_INTERVAL" ]; then
+            unset "PPS_ARRAY[0]"
+        fi
+        if [ "$PPS" -gt "$LEVEL_THRESHOLD" ] && [ -z "$MESSAGE" ]; then
+            ALERT_TIME=$(date +%s)
+            ALERT_LEVEL=$(levelAlert "$PPS")
+            MESSAGE=$(levelMessage "$ALERT_LEVEL")
+        fi
+        CURRENT_TIME=$(date +%s)
+        ELAPSED_TIME=$((CURRENT_TIME-ALERT_TIME))
+        if [ "$ELAPSED_TIME" -ge "$ALERT_INTERVAL" ] && [ -n "$MESSAGE" ]; then
+            AVERAGE_PPS=$(IFS=+; echo "$((${PPS_ARRAY[*]}))")/${#PPS_ARRAY[@]} | bc)
+            MSG_TEXT="<b>High $DIRECTION Packet Detected ($MESSAGE)</b>%0A%0AIP Address: $IP%0ADirection: $DIRECTION%0AAverage PPS (15s): $AVERAGE_PPS pps%0ATime: $(date +'%Y-%m-%d %H:%M:%S')"
+            curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            -d chat_id="$TELEGRAM_CHAT_ID" \
+            -d text="$MSG_TEXT" \
+            -d parse_mode="HTML"
+            echo "$MSG_TEXT" >> /var/log/ban.log
+            exit 0
+        fi
+        sleep 1
+    done
+fi
+
+if [ "$4" == "attack_details" ]; then
+    echo "$MSG_TEXT" >> /var/log/ban.log
+    exit 0
+fi
+
+
 #!/bin/sh
 
 TELEGRAM_BOT_TOKEN="5887410138:AAGPtHTxEZZX0rXoptjx69g1UpoOSz5Ss2w"
