@@ -1,3 +1,11 @@
+nano /etc/apt/sources.list
+deb http://deb.debian.org/debian/ bullseye main contrib non-free
+deb-src http://deb.debian.org/debian/ bullseye main contrib non-free
+
+# bullseye-updates, previously known as 'volatile'
+deb http://deb.debian.org/debian bullseye-updates main contrib non-free
+deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+
 1605
 7378
 
