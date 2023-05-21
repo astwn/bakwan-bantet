@@ -1,0 +1,256 @@
+1605
+7378
+
+Password Grafana JTIK
+LiGtiLuHdega2082
+
+Grafana VMWare
+ViXxaDuMmedi9520
+
+FuPqoHaDcula1199
+find / -xdev -type f -size +50M -exec du -sh {} ';' | sort -rh | head -n10
+
+truncate -s 0 -c /var/log/fastnetmon.log
+truncate -s 0 -c /var/log/daemon.log*
+truncate -s 0 -c /var/log/syslog*.gz
+find /var/log/fastnetmon_attacks/ -name "*.txt" -delete
+
+
+/var/lib/influxdb/data/graphite/autogen/
+https://my.idcloudhost.com/grafana/webhooksingapore.php
+
+   26  wget https://install.fastnetmon.com/installer -Oinstaller
+   27  chmod +x installer
+   28  ./installer -install_community_edition
+   31  nano /etc/networks_list
+   32  systemctl restart fastnetmon.service
+   33  systemctl status fastnetmon.service
+   34  fastnetmon_client
+
+   35  wget https://raw.githubusercontent.com/pavel-odintsov/fastnetmon/master/src/notify_about_attack.sh -O/usr/local/bin/notify_about_attack.sh
+   36  chmod 755 /usr/local/bin/notify_about_attack.sh
+   chmod 777 /usr/local/bin/notify_about_attack.sh
+
+
+   42  apt-get install gpg
+   39  wget -q https://repos.influxdata.com/influxdb.key
+   43  echo '23a1c8836f0afc5ed24e0486339d7cc8f6790b83886c4c96995b88a061c5bb5d influxdb.key' | sha256sum -c && cat influxdb.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdb.gpg > /dev/null
+   44  echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+   45  apt-get update && apt-get install influxdb
+   46  systemctl enable --now influxdb
+
+	pake ini klo gabisa
+	wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+	echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+	echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+
+
+  wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+  echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+  echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+
+  apt-get update
+  apt-get install influxdb
+  systemctl enable --now influxdb
+
+  nano /etc/fastnetmon.conf
+	netflow = on
+	sflow = on
+	
+	netflow_port = 2055
+	netflow_host = 0.0.0.0
+	netflow_sampling_ratio = 1
+
+	sflow_port = 6343
+	sflow_host = 0.0.0.0
+
+	influxdb = on
+	influxdb_host = 127.0.0.1
+	influxdb_port = 8086
+	influxdb_database = fastnetmon
+	# InfluxDB auth
+	influxdb_auth = off
+	influxdb_user = fastnetmon
+	influxdb_password = Qwerty123
+
+	graphite = on
+	graphite_host = 127.0.0.1
+	graphite_port = 2003
+	graphite_prefix = fastnetmon
+	graphite_push_period = 1
+
+	enable_api = on
+
+
+
+   
+   ./installer -install_graphic_stack
+
+   Please login into http://your.ip.ad.dr.ess:81 or https://your.ip.ad.dr.ess:443 with login admin and password DuGfaXoTdiqo1759
+   DuGfaXoTdiqo1759
+
+   ./installer -reset_visual_passwords -visual_login admin
+
+
+  nano /etc/influxdb/influxdb.conf
+    reporting-enabled = true
+    bind-address = "127.0.0.1:8088"
+    [[graphite]]
+    enabled = true
+	 #database = "graphite"
+   	retention-policy = ""
+   	bind-address = "127.0.0.1:2003"
+   	protocol = "tcp"
+   	consistency-level = "one"
+  	
+  	# Flush if this many points get buffered
+   	batch-size = 5000
+
+  	# number of batches that may be pending in memory
+   	batch-pending = 10
+
+  	# Flush at least this often even if we haven't hit buffer limit
+   	batch-timeout = "1s"
+
+  	### This string joins multiple matching 'measurement' values providing more control over the final measurement name.
+   	separator = "."
+
+   	templates = [
+    "fastnetmon.hosts.* app.measurement.cidr.direction.function.resource",
+    "fastnetmon.networks.* app.measurement.cidr.direction.resource",
+    "fastnetmon.total.* app.measurement.direction.resource"
+  	]
+
+
+
+
+[admin@MikroTik] > ip traffic-flow 
+[admin@MikroTik] /ip traffic-flow> set enabled=yes 
+[admin@MikroTik] /ip traffic-flow> set interfaces=all 
+[admin@MikroTik] /ip traffic-flow> set active-flow-timeout=00:01:00 
+[admin@MikroTik] /ip traffic-flow> set inactive-flow-timeout=00:00:30 
+[admin@MikroTik] /ip traffic-flow> set cache-entries=16k 
+[admin@MikroTik] /ip traffic-flow> /
+[admin@MikroTik] > ip traffic-flow target 
+[admin@MikroTik] /ip traffic-flow target> add dst-address=192.168.10.50 port=2055 version=9 v9-template-refresh=30 v9-template-timeout=30 
+
+
+
+
+
+
+Install Grafana Debian
+apt-get install -y wget gnupg2 curl software-properties-common dirmngr apt-transport-https lsb-release ca-certificates -y
+wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | tee -a /etc/apt/sources.list.d/grafana.list
+apt-get update
+apt-get install grafana-enterprise
+systemctl daemon-reload
+systemctl start grafana-server
+systemctl status grafana-server
+
+
+
+wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+
+
+
+
+
+
+
+iperf -c 192.168.20.21 -u -t 300 -b 100M
+iperf -c 10.10.10.1 -u -t 10 -b 10M
+
+
+nano /etc/nginx/sites-enabled/grafana.conf
+  location / {
+   proxy_pass http://127.0.0.1:3000/;
+   proxy_set_header Host $http_host;
+  }
+
+
+
+if [ "$4" = "ban" ]; then
+    cat "FastNetMon Guard: IP $1 blocked because $2 attack with power $3 pps" >> /var/log/ban.log
+    exit 0
+fi
+
+
+Monjarbot
+5298617050:AAGF6APEOG_wDEReBuPwgdgfvyiPqhr-d-s
+-655487208
+
+
+SELECT mean("value") FROM "hosts" WHERE "direction" = 'incoming' AND "resource" = 'pps' AND "app" =~ /^fastnetmon$/  AND value > 10000 AND $timeFilter GROUP BY time($__interval), cidr fill(previous)
+
+
+SELECT mean("value") FROM "hosts" WHERE $timeFilter GROUP BY time($__interval) fill(null)
+
+SELECT mean("value") FROM "hosts" WHERE "direction" = 'outgoing' AND "resource" = 'pps' AND "app" =~ /^fastnetmon$/  AND value > 10000 AND $timeFilter GROUP BY time($__interval), cidr fill(previous)
+
+
+
+select * from "hosts" order by time desc limit 10
+select * from "networks" order by time desc limit 10
+select * from "total" order by time desc limit 10
+
+DELETE FROM hosts WHERE time = '1680750171000000000'
+
+
+https://api.telegram.org/bot5887410138:AAGPtHTxEZZX0rXoptjx69g1UpoOSz5Ss2w/getUpdates
+-641335895
+
+curl -X POST "https://api.telegram.org/bot5887410138:AAGPtHTxEZZX0rXoptjx69g1UpoOSz5Ss2w/sendMessage" -d "chat_id=-641335895&text=Shinigami"
+
+{"ok":true,"result":{"message_id":4285,"from":{"id":5887410138,"is_bot":true,
+"first_name":"JTIK-NetMon","username":"JTIK_NetMon_Bot"},"chat":{"id":-641335895,"title":"JTIK-NetMon","type":"group","all_members_are_administrators":true},
+"date":1684375585,"text":"Tes"}}
+
+https://api.telegram.org/bot5887410138:AAGPtHTxEZZX0rXoptjx69g1UpoOSz5Ss2w/setWebhook?url=https://smartroom.id/webhook/webhook.php
+
+https://api.telegram.org/bot5887410138:AAGPtHTxEZZX0rXoptjx69g1UpoOSz5Ss2w/deleteWebhook?url=https://smartroom.id/webhook/webhook.php
+https://smartroom.id/webhook/webhook.php
+
+
+ping 192.168.1.1 -l 39999 -n 10000000 -w 0.00001
+ping -f dst
+$ slowhttptest -c 1000 -u https://linuxku.com
+$ slowhttptest -c 1000 -H -g -o linuxku_stats -i 10 -r 200 -t GET -u https://linuxku.com -x 24 -p 3
+
+
+UDP Flood
+hping3 -q -n --udp -d 1500 -s 1234 --keep -p 80 --rand-source --flood 172.16.10.10
+
+TCP Syn Flood
+hping3 -q -n -S -d 1500 -s 1234 --keep -p 80 --rand-source --flood 172.16.10.10
+
+ICMP Flood
+hping3 -q -n --icmp -d 1500 -s 1234 --keep -p 80 --rand-source --flood 172.16.10.10
+
+
+ICMP 500pps 40 detik
+hping3 --rand-source --icmp -s 1234 -p 80 --count 10000 --interval u2000 172.16.10.10
+
+UDP 500pps 20 detik
+hping3 --rand-source --udp -s 1234 -p 80 --count 10000 --interval u1000 172.16.10.10
+60 detik
+hping3 --rand-source --udp -s 1234 -p 80 --count 20000 --interval u2000 172.16.10.10
+
+TCP 500pps 40 detik
+hping3 --rand-source -S -s 1234 -p 80 --count 50000 --interval u2000 172.16.10.10
+
+
+hping3 -q -n -SARFU -p 80 --flood 172.16.10.10
+hping3 -q -n --id 0 --icmp -d 80 --flood 172.16.10.10
+hping3 -S --flood -V -p 80 172.16.10.10
+hping3 -S -p 80 -i u100 172.16.10.10 -d 1500
+
+
+python3 goldeneye.py http://172.16.10.10 -s 500
+
+TCP Syn Flood
+hping3 -S -p 80 Target — flood
+
