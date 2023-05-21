@@ -1,3 +1,66 @@
+git clone https://github.com/dimasaulia/smart-door-server.git
+PORT = 8080
+MAX_AGE = 259200
+SECRET = 6d787705ab926de7184b9c867248aecbf7a4b0261ca6ca4c81280ea10b8a3ae11dfc4c551f40a1d8d049d29da24be3c152137c4a9653f234be3bfa429720fc80
+NODE_ENV = DEV
+ITEM_LIMIT = 20
+CARD_ITEM_LIMIT = 20
+MAIL_SERVER = smtp.mailtrap.io
+MAIL_PORT = 2525
+MAIL_USER = b8e1a3b2c78d4e
+MAIL_SECRET = a58668dfc26b07
+PHONE_NUMBER = 6285770693390
+DEFAULT_HW_PIN = 220982
+DEVICE_PIN_HASH = "$2b$10$93H.6AQWHWxlq4IQuT1cgu2oCi7OtgyTjYuWlgcq9beN2xPLSgFUW"
+DATABASE_URL="postgresql://postgres:Qwerty123@127.0.0.1:5432/db_smart_door?schema=public"
+SEED_API_KEY = "WCPaDR1F2cwSUMPWuXDm13JMYU-NeWO1"
+SEED_API_ID = "cl9xxy39x0000cklku2klje55"
+
+  apt-get update
+  apt-get upgrade
+  apt-get install python3 firewalld curl postgresql postgresql-contrib nginx
+  apt-get install nodejs curl postgresql postgresql-contrib
+  curl -sL https://deb.nodesource.com/setup_18.x | bash -
+  apt-get install -y nodejs
+  
+  npm install -g yarn
+  
+  systemctl start postgresql
+  systemctl enable postgresql
+  systemctl status postgresql
+  passwd postgres
+
+  su postgres
+  psql
+  ALTER USER postgres with PASSWORD 'Doorlock';
+
+  cd /etc/postgresql/13/main/
+  cp postgresql.conf postgresql.conf.bckup
+  cp pg_hba.conf pg_hba.conf.bckup
+
+  nano postgresql.conf
+        listen_addresses = '*' 
+        port = 5432 
+        max_connections = 100 
+  
+  sed -i '/^host/s/ident/md5/' /etc/postgresql/13/main/pg_hba.conf
+  nano pg_hba.conf
+        host    all             all             0.0.0.0/0            md5
+
+  systemctl restart postgresql
+  systemctl status postgresql
+  netstat -tulpn
+
+  yarn install
+  yarn db:migrate
+
+proxy_pass http://172.27.100.48:8000;
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection 'upgrade';
+proxy_set_header Host $host;
+proxy_cache_bypass $http_upgrade;
+
 nano /etc/apt/sources.list
 deb http://deb.debian.org/debian/ bullseye main contrib non-free
 deb-src http://deb.debian.org/debian/ bullseye main contrib non-free
